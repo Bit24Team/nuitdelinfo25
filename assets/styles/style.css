@@ -469,6 +469,89 @@ input:checked + .slider:before {
     text-transform: uppercase;
 }
 
+
+/* --- Styles du Carrousel --- */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px; /* Espace pour les boutons */
+}
+
+.carousel-track-container {
+    overflow: hidden; /* Cache les cartes qui dépassent */
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    transition: transform 0.4s ease-in-out;
+}
+
+.carousel-slide {
+    /* Calcul pour afficher 5 éléments : 100% / 5 = 20% */
+    min-width: 20%; 
+    padding: 0 10px; /* Espacement entre les cartes */
+    box-sizing: border-box;
+}
+
+/* Réutilisation du style des cartes, ajusté pour le carrousel */
+.member-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Boutons de navigation */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+    background: #646cff; /* Couleur d'accent (à adapter selon ton thème) */
+}
+
+.prev-btn { left: -10px; }
+.next-btn { right: -10px; }
+
+/* Responsive : réduire le nombre d'éléments sur petits écrans */
+@media (max-width: 1024px) {
+    .carousel-slide { min-width: 33.33%; } /* 3 par écran */
+}
+@media (max-width: 768px) {
+    .carousel-slide { min-width: 50%; } /* 2 par écran */
+}
+@media (max-width: 480px) {
+    .carousel-slide { min-width: 100%; } /* 1 par écran */
+}
+
+
 /* Footer */
 .footer {
     background: var(--dark-bg);

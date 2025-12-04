@@ -180,3 +180,64 @@ window.addEventListener('load', () => {
 });
 
 console.log('🚀 Hub initialized successfully!');
+
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.querySelector('.carousel-track');
+    // Si la section n'existe pas sur la page, on arrête le script pour éviter les erreurs
+    if (!track) return;
+
+    const nextButton = document.querySelector('#nextBtn');
+    const prevButton = document.querySelector('#prevBtn');
+    
+    // Largeur d'une slide (on recalcule au resize)
+    let slideWidth = document.querySelector('.carousel-slide').getBoundingClientRect().width;
+    
+    let currentIndex = 0;
+    // Nombre total de membres
+    const totalSlides = document.querySelectorAll('.carousel-slide').length;
+    
+    // Fonction pour déterminer combien de slides sont visibles selon l'écran (CSS logic)
+    function getVisibleSlides() {
+        if (window.innerWidth <= 480) return 1;
+        if (window.innerWidth <= 768) return 2;
+        if (window.innerWidth <= 1024) return 3;
+        return 5; // Par défaut sur grand écran
+    }
+
+    const moveToSlide = (index) => {
+        // Empêcher d'aller trop loin
+        const maxIndex = totalSlides - getVisibleSlides();
+        
+        if (index < 0) {
+            index = 0;
+        } else if (index > maxIndex) {
+            index = maxIndex; 
+        }
+        
+        currentIndex = index;
+        const amountToMove = -(slideWidth * currentIndex);
+        track.style.transform = `translateX(${amountToMove}px)`;
+    };
+
+    nextButton.addEventListener('click', () => {
+        const visibleSlides = getVisibleSlides();
+        if (currentIndex < totalSlides - visibleSlides) {
+            moveToSlide(currentIndex + 1);
+        } else {
+            // Optionnel : boucle retour au début
+            moveToSlide(0);
+        }
+    });
+
+    prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            moveToSlide(currentIndex - 1);
+        }
+    });
+
+    // Mettre à jour la largeur lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', () => {
+        slideWidth = document.querySelector('.carousel-slide').getBoundingClientRect().width;
+        moveToSlide(currentIndex);
+    });
+});
