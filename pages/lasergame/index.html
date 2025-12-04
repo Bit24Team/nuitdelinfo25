@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Game Evolution - Défi Nuit de l'Info</title>
+    <link rel="stylesheet" href="../../assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/laser.css">
+</head>
+<body>
+
+    <div id="game-ui" class="hidden">
+        <div class="hud-top">
+            <div class="score-board">SCORE: <span id="score">0</span></div>
+            <div class="health-board">VIE: <span id="health">100</span>%</div>
+            <button id="stop-game-btn">Arrêter la mission</button>
+        </div>
+        <div id="crosshair"></div> <div id="impact-container"></div> <div id="game-over-modal" class="hidden">
+            <h2>MISSION TERMINÉE</h2>
+            <p>Score final : <span id="final-score">0</span></p>
+            <input type="text" id="player-name" placeholder="Votre Pseudo" maxlength="10">
+            <button id="save-score">Enregistrer le score</button>
+            
+            <h3>Tableau des scores</h3>
+            <ul id="leaderboard-list"></ul>
+            <button onclick="location.reload()">Rejouer</button>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <h1>Laser Game Evolution</h1>
+        <p>Bienvenue sur notre documentation technique.</p>
+        <button id="start-game-btn" class="cta-button">ACTIVER LE PROTOCOLE ZERGUÈM</button>
+    </header>
+
+    <main class="content-wrapper">
+        <section class="targetable">
+            <h2>Notre Histoire</h2>
+            <p>Depuis l’ouverture de notre premier centre, sous la marque Laser Game Evolution, près de 110 établissements ont été créés.</p>
+        </section>
+
+        <section class="grid-container">
+            <div class="card targetable">
+                <h3>Chiffre d'affaires</h3>
+                <p>31 millions générés en 2019.</p>
+            </div>
+            <div class="card targetable">
+                <h3>Leader</h3>
+                <p>Leader du marché français du jeu laser.</p>
+            </div>
+            <div class="card targetable">
+                <h3>Concept</h3>
+                <p>Nous maîtrisons le concept de A à Z.</p>
+            </div>
+        </section>
+
+        <section class="targetable">
+            <h2>Règles de sécurité</h2>
+            <ul>
+                <li>Ne pas courir</li>
+                <li>Ne pas grimper</li>
+                <li>Fair play avant tout</li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="./assets/scripts/game.js"></script>
+</body>
+</html>
