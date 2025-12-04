@@ -7,6 +7,7 @@ class SnakeGame {
         this.nextDirection = { x: 1, y: 0 };
         this.foods = [];
         this.score = 0;
+        this.highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
         this.gameSpeed = 100;
         this.gameLoop = null;
         this.snakeSize = 40;
@@ -23,6 +24,13 @@ class SnakeGame {
             'https://www.nuitdelinfo.com/inscription/uploads/partenaires/448/logos/logo.png',
             'https://www.nuitdelinfo.com/inscription/uploads/partenaires/500/logos/logo.jpg'
         ];
+        
+        // Sound effects
+        this.sounds = {
+            start: this.createSound([262, 330, 392, 523], [0.1, 0.1, 0.1, 0.2]),
+            eat: this.createSound([523, 659], [0.05, 0.1]),
+            gameOver: this.createSound([392, 330, 262, 196], [0.1, 0.1, 0.1, 0.3])
+        };
         
         this.init();
     }
@@ -47,11 +55,38 @@ class SnakeGame {
         });
     }
     
+    createSound(frequencies, durations) {
+        return () => {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            let startTime = audioContext.currentTime;
+            
+            frequencies.forEach((freq, i) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = freq;
+                oscillator.type = 'square';
+                
+                gainNode.gain.setValueAtTime(0.1, startTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + durations[i]);
+                
+                oscillator.start(startTime);
+                oscillator.stop(startTime + durations[i]);
+                
+                startTime += durations[i];
+            });
+        };
+    }
+    
     activate() {
         if (this.active) return;
         
         this.active = true;
         this.score = 0;
+        this.sounds.start();
         this.hideOriginalImages();
         this.initSnake();
         this.spawnFood();
@@ -97,7 +132,10 @@ class SnakeGame {
             box-shadow: 0 5px 20px rgba(99, 102, 241, 0.5);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         `;
-        scoreDisplay.innerHTML = `🐍 Score: <span id="snake-score-value">0</span>`;
+        scoreDisplay.innerHTML = `
+            <div>🐍 Score: <span id="snake-score-value">0</span></div>
+            <div style="font-size: 16px; margin-top: 8px; opacity: 0.9;">🏆 Best: ${this.highScore}</div>
+        `;
         document.body.appendChild(scoreDisplay);
     }
     
@@ -339,6 +377,7 @@ class SnakeGame {
             if (distance < this.snakeSize / 2) {
                 this.score += 1;
                 this.updateScore();
+                this.sounds.eat();
                 
                 // Spawn new food
                 this.spawnFood();
@@ -364,9 +403,17 @@ class SnakeGame {
     
     gameOver() {
         clearInterval(this.gameLoop);
+        this.sounds.gameOver();
+        
+        // Update high score
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            localStorage.setItem('snakeHighScore', this.highScore);
+        }
         
         // Show game over message
         const gameOverEl = document.createElement('div');
+        gameOverEl.id = 'snake-game-over';
         gameOverEl.style.cssText = `
             position: fixed;
             top: 50%;
@@ -385,15 +432,40 @@ class SnakeGame {
         gameOverEl.innerHTML = `
             <div style="font-size: 48px; margin-bottom: 20px;">Game Over!</div>
             <div style="font-size: 28px; margin-bottom: 15px;">Score: ${this.score}</div>
-            <div style="font-size: 18px; opacity: 0.9;">Tapez "snake" pour rejouer</div>
+            <div style="font-size: 20px; margin-bottom: 25px; opacity: 0.9;">🏆 Best: ${this.highScore}</div>
+            <button id="snake-replay-btn" style="
+                background: white;
+                color: #6366f1;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 10px;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            ">🔄 Rejouer</button>
         `;
         
         document.body.appendChild(gameOverEl);
         
-        setTimeout(() => {
+        // Add hover effect to button
+        const replayBtn = document.getElementById('snake-replay-btn');
+        replayBtn.addEventListener('mouseenter', () => {
+            replayBtn.style.transform = 'scale(1.05)';
+            replayBtn.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+        });
+        replayBtn.addEventListener('mouseleave', () => {
+            replayBtn.style.transform = 'scale(1)';
+            replayBtn.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+        });
+        
+        // Replay button click handler
+        replayBtn.addEventListener('click', () => {
             gameOverEl.remove();
             this.deactivate();
-        }, 3000);
+            this.activate();
+        });
     }
     
     showInstructions() {
@@ -432,6 +504,9 @@ class SnakeGame {
         
         const scoreDisplay = document.getElementById('snake-score-display');
         if (scoreDisplay) scoreDisplay.remove();
+        
+        const gameOverEl = document.getElementById('snake-game-over');
+        if (gameOverEl) gameOverEl.remove();
         
         // Show original images back
         this.showOriginalImages();
