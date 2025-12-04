@@ -199,7 +199,7 @@ class SnakeGame {
     }
     
     drawSnake() {
-        // Remove old snake elements
+        // Remove old snke elements
         this.snakeElements.forEach(el => el.remove());
         this.snakeElements = [];
         
