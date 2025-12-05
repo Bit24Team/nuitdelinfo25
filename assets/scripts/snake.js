@@ -128,7 +128,7 @@ class SnakeGame {
             padding: 10px 20px;
             border-radius: 5px;
             font-size: 18px;
-            z-index: 9998;
+            z-index: 10000;
         `;
         scoreDisplay.innerHTML = `
             <div style="font-size: 20px; margin-bottom: 10px; color: #e0e7ff;">Score : <span style="color: #000000ff; font-weight: bold;">${this.score}</span></div>
