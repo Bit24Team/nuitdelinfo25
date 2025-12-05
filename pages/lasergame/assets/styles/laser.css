@@ -1,6 +1,6 @@
 /* nuitdelinfo25/pages/lasergame/assets/styles/laser.css */
 
-/* --- CONFIGURATION GLOBALE --- */
+/* --- 1. CONFIGURATION GLOBALE --- */
 body.game-mode {
     cursor: none !important;
     overflow-x: hidden;
@@ -8,70 +8,57 @@ body.game-mode {
 }
 body.game-mode * { cursor: none !important; }
 
-/* --- HUD (INTERFACE DE JEU) --- */
+/* --- 2. HUD (INTERFACE DE JEU) --- */
 .hud-panel {
     position: fixed;
     top: 100px; right: 20px;
-    
-    /* Ton style visuel */
     background: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 20px;
+    padding: 15px; /* Padding réduit pour être moins gros */
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 10000;
-    min-width: 180px;
+    min-width: 160px;
     border-left: 4px solid var(--accent-color);
     
-    /* --- LES MODIFICATIONS --- */
-    opacity: 0.5;            /* Ta demande : le rendre discret */
-    pointer-events: none;    /* MAGIE : Les clics traversent ce panneau ! */
-    transition: opacity 0.3s; /* Pour faire joli au survol */
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.3s;
 }
-#stop-game-btn {
-    pointer-events: auto;    /* Le bouton reste cliquable */
-    cursor: pointer;
-    
-    /* Le reste de ton style bouton... */
-    width: 100%; margin-top: 10px; padding: 8px;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    color: #cbd5e1; border-radius: 6px; font-size: 0.8rem;
-}
-/* Petit bonus : si on passe la souris dessus, il redevient bien visible */
-.hud-panel:hover {
-    opacity: 1;
-}
+.hud-panel:hover { opacity: 1; }
 
 .hud-row {
     display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .hud-label {
-    font-size: 0.8rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;
+    font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px;
 }
 
 .hud-value {
-    font-size: 1.5rem; font-weight: 800; color: white;
+    font-size: 1.2rem; font-weight: 800; color: white;
     text-shadow: 0 0 10px currentColor;
 }
 
 #stop-game-btn {
-    width: 100%; margin-top: 10px; padding: 8px;
+    pointer-events: auto;
+    cursor: pointer;
+    width: 100%; margin-top: 8px; padding: 6px;
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    color: #cbd5e1; border-radius: 6px; cursor: none; font-size: 0.8rem;
+    color: #cbd5e1; border-radius: 6px; font-size: 0.75rem;
 }
 #stop-game-btn:hover { background: rgba(239,68,68,0.2); color: #ef4444; border-color: #ef4444; }
 
-/* --- VISEUR --- */
+/* --- 3. VISEUR --- */
 #crosshair {
     position: fixed; width: 40px; height: 40px;
     border: 2px solid var(--accent-color);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none; z-index: 99999;
-    box-shadow: 0 0 15px var(--accent-color), inset 0 0 10px var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
     transition: transform 0.05s ease-out;
 }
 #crosshair::after {
@@ -80,7 +67,7 @@ body.game-mode * { cursor: none !important; }
     transform: translate(-50%, -50%); border-radius: 50%;
 }
 
-/* --- ENNEMIS & PROJECTILES --- */
+/* --- 4. ENNEMIS & TIRS --- */
 .enemy {
     position: fixed; font-size: 40px; z-index: 9000;
     filter: drop-shadow(0 0 15px var(--secondary-color));
@@ -101,8 +88,7 @@ body.game-mode * { cursor: none !important; }
     box-shadow: 0 0 15px var(--primary-color);
 }
 
-/* --- EFFETS VISUELS --- */
-/* Overlay rouge qui couvre TOUT l'écran quand touché */
+/* --- 5. EFFETS --- */
 .damage-overlay {
     position: fixed; inset: 0;
     background: radial-gradient(circle, transparent 30%, rgba(220, 38, 38, 0.5) 100%);
@@ -111,7 +97,6 @@ body.game-mode * { cursor: none !important; }
 }
 @keyframes flashOut { from { opacity: 1; } to { opacity: 0; } }
 
-/* Tremblement d'écran */
 .shake-screen { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 @keyframes shake {
   10%, 90% { transform: translate3d(-2px, 0, 0); }
@@ -120,55 +105,87 @@ body.game-mode * { cursor: none !important; }
   40%, 60% { transform: translate3d(6px, 0, 0); }
 }
 
-/* Élément touché */
 .element-hit {
     color: var(--accent-color) !important;
     text-shadow: 0 0 15px var(--accent-color);
     transform: scale(0.95); transition: 0.1s;
 }
 
-/* --- MODAL FIN --- */
+/* --- 6. MODAL FIN (CORRIGÉ & COMPACT) --- */
 #game-over-modal {
     position: fixed; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--bg-secondary);
+    
+    background: rgba(15, 23, 42, 0.95); /* Fond sombre NIRD */
     border: 1px solid rgba(255,255,255,0.1);
-    padding: 40px; border-radius: 20px;
+    
+    padding: 30px; /* Moins de padding */
+    border-radius: 20px;
     box-shadow: 0 0 100px rgba(0,0,0,0.8);
-    text-align: center; z-index: 20000;
-    width: 400px;
+    text-align: center; 
+    z-index: 20000;
+    width: 350px; /* Plus étroit */
+    color: white;
 }
+
+#game-over-modal h2 {
+    font-size: 1.5rem; margin-bottom: 5px; color: white;
+}
+
 .final-score-display {
-    font-size: 3rem; font-weight: 800;
+    font-size: 2.5rem; font-weight: 800;
+    margin: 10px 0 20px 0;
     background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.leaderboard-container {
-    margin-top: 20px; text-align: left; background: rgba(0,0,0,0.2);
-    padding: 15px; border-radius: 10px;
+
+/* INPUT PSEUDO (Décollé et visible) */
+#player-name {
+    display: block; width: 100%;
+    padding: 10px; 
+    margin-bottom: 15px; /* ESPACE AVEC LE BOUTON */
+    
+    background: rgba(0, 0, 0, 0.5); /* Fond sombre */
+    border: 1px solid var(--primary-color);
+    color: white; 
+    border-radius: 8px;
+    font-size: 1rem; text-align: center;
+    box-sizing: border-box; /* Important pour pas que ça dépasse */
 }
-#leaderboard-list { list-style: none; padding: 0; }
+
+/* Bouton Enregistrer */
+#save-score {
+    width: 100%; padding: 10px; font-size: 1rem;
+    border-radius: 8px; margin-bottom: 20px;
+}
+
+.leaderboard-container {
+    margin-top: 10px; text-align: left; background: rgba(0,0,0,0.2);
+    padding: 10px; border-radius: 10px; font-size: 0.9rem;
+}
+#leaderboard-list { list-style: none; padding: 0; margin: 0; }
 #leaderboard-list li {
     display: flex; justify-content: space-between;
     padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-#player-name {
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.6); /* Fond sombre pour contraste */
-    border: 2px solid var(--primary-color); /* Bordure violette */
-    color: white; /* Texte blanc bien visible */
-    border-radius: 8px;
-    width: 60%;
-    font-size: 1rem;
-    outline: none;
-    /* La petite shadow demandée */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+/* BOUTON RELANCER (TON STYLE) */
+#game-over-modal .btn-secondary {
+    margin-top: 20px;
+    background: transparent;
+    border: 2px solid var(--text-secondary); /* Utilise la variable du thème ou #cbd5e1 */
+    color: #cbd5e1; /* Couleur claire */
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
     transition: all 0.3s;
 }
 
-#player-name:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 20px var(--accent-color); /* Glow rose quand on clique dedans */
+#game-over-modal .btn-secondary:hover {
+    border-color: white;
+    color: white;
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
 }
 
 .hidden { display: none !important; }
