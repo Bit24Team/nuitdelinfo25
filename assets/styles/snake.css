@@ -43,3 +43,42 @@
         opacity: 0;
     }
 }
+
+/* Renforcements pour effet "manger" */
+.snake-eat {
+    animation: headEatBig 520ms cubic-bezier(.2,.8,.2,1);
+    box-shadow: 0 0 44px rgba(99,102,241,1), 0 0 90px rgba(99,102,241,0.75);
+    transform-origin: center;
+    z-index: 11000 !important;
+}
+
+@keyframes headEatBig {
+    0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(99,102,241,0)); }
+    30% { transform: scale(1.5) rotate(-8deg) translateY(-4px); filter: drop-shadow(0 14px 40px rgba(99,102,241,0.95)); }
+    60% { transform: scale(1.35) rotate(6deg) translateY(2px); filter: drop-shadow(0 10px 30px rgba(99,102,241,0.85)); }
+    100% { transform: scale(1) rotate(0deg) translateY(0); filter: drop-shadow(0 0 0 rgba(99,102,241,0)); }
+}
+
+/* Screen shake rapide */
+.snake-screen-shake {
+    animation: screenShake 240ms ease-in-out;
+}
+
+@keyframes screenShake {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-6px) rotate(-0.6deg); }
+    50% { transform: translateY(4px) rotate(0.4deg); }
+    75% { transform: translateY(-2px) rotate(-0.3deg); }
+    100% { transform: translateY(0); }
+}
+
+/* Particles plus visibles */
+.eat-particle {
+    will-change: transform, opacity, filter;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+/* Optionnel: rendre la disparition de la nourriture un peu plus marquée */
+.is-eaten {
+    animation: eatFood 0.45s cubic-bezier(.2,.9,.2,1) forwards !important;
+}

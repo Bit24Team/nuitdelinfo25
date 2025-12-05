@@ -9,7 +9,7 @@ class SnakeGame {
         this.foods = [];
         this.score = 0;
         this.highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
-        this.gameSpeed = 100;
+        this.gameSpeed = 130;
         this.gameLoop = null;
         this.snakeSize = 40;
         this.typedWord = '';
@@ -251,7 +251,7 @@ class SnakeGame {
                 animation: headPulse ${this.gameSpeed / 200}s ease-in-out; /* Effet de pulsation très rapide lors du mouvement */
             `;
         }
-        
+
         segmentEl.style.cssText = `
             position: fixed;
             left: ${segment.x - size / 2}px;
@@ -262,13 +262,13 @@ class SnakeGame {
             border-radius: 0;
             z-index: ${9999 - index};
             box-shadow: ${isHead 
-            ? '0 0 20px rgba(99, 102, 241, 0.8), inset 3px 3px 6px rgba(255, 255, 255, 0.3), inset -3px -3px 6px rgba(0, 0, 0, 0.3)' 
+            ? '0 0 24px rgba(216, 228, 50, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.3), inset -3px -3px 6px rgba(0, 0, 0, 0.3)' 
             : `0 0 10px rgba(99, 102, 241, ${alpha * 0.5}), inset 2px 2px 4px rgba(255, 255, 255, ${alpha * 0.2}), inset -2px -2px 4px rgba(0, 0, 0, ${alpha * 0.2})`};
             pointer-events: none;
-            border: 2px solid rgba(139, 92, 246, ${isHead ? 0.9 : alpha * 0.7});
+            /* Contour en jaune plus foncé que le corps */
+            border: ${isHead ? '3px solid #b36a00' : '2px solid rgba(179,106,0,0.95)'};
             ${headStyles}
         `;
-        
         // Add eyes and tongue to head (code inchangé)
         if (isHead) {
             // Calculate tongue position based on direction (Y-shaped)
@@ -442,6 +442,11 @@ class SnakeGame {
             this.updateScore();
             this.sounds.eat();
             ateFood = true;
+            
+            // Accélération du jeu à chaque fruit
+            this.gameSpeed = Math.max(50, this.gameSpeed - 5);
+            clearInterval(this.gameLoop);
+            this.startGame();
 
             // 1. Déclenche l'animation de disparition CSS (plus robuste)
             if (this.foodElements[0]) {
@@ -466,7 +471,20 @@ class SnakeGame {
     
     // Redraw snake
     this.drawSnake();
-}
+
+        // Eat animation: pulse head + particles
+        if (ateFood) {
+            const headEl = this.snakeElements[0];
+            if (headEl) {
+                headEl.classList.add('snake-eat');
+                setTimeout(() => headEl.classList.remove('snake-eat'), 400);
+            }
+
+            // spawn particles at food position (use eaten food coords if available)
+            const foodPos = (typeof food !== 'undefined' && food) ? { x: food.x, y: food.y } : { x: head.x, y: head.y };
+            this.spawnEatParticles(foodPos.x, foodPos.y);
+        }
+    }
     
     updateScore() {
         const scoreValue = document.getElementById('snake-score-value');
