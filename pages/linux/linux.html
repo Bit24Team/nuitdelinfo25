@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIRD Linux Academy - Enseigner le numérique libre</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- ====================================
+         NAVIGATION
+         ==================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🐧 NIRD Linux Academy</h1>
+            </div>
+            <div class="nav-actions">
+                <label class="theme-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====================================
+         ÉCRAN D'ACCUEIL
+         ==================================== -->
+    <section id="welcome-screen" class="welcome-screen active">
+        <div class="welcome-bg"></div>
+        <div class="welcome-content">
+            <h1 class="welcome-title">🏛️ NIRD Linux Academy</h1>
+            <p class="welcome-subtitle">Le Village Numérique Résistant</p>
+            <p class="welcome-description">
+                Apprenez les secrets de Linux et rejoignez la résistance numérique ! 
+                Découvrez comment les écoles peuvent devenir indépendantes des Big Tech 
+                et construire un numérique libre, responsable et durable.
+            </p>
+            <div class="level-selector">
+                <button class="level-btn" onclick="selectLevel('elementary')">
+                    <div class="level-icon">🎒</div>
+                    <div>Primaire</div>
+                    <small style="font-size: 0.8rem;">6-11 ans</small>
+                </button>
+                <button class="level-btn" onclick="selectLevel('middle')">
+                    <div class="level-icon">📚</div>
+                    <div>Collège</div>
+                    <small style="font-size: 0.8rem;">11-15 ans</small>
+                </button>
+                <button class="level-btn" onclick="selectLevel('high')">
+                    <div class="level-icon">🚀</div>
+                    <div>Lycée</div>
+                    <small style="font-size: 0.8rem;">15-18 ans</small>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================
+         ÉCRAN D'APPLICATION
+         ==================================== -->
+    <section id="app-screen">
+        <div class="container">
+            <!-- En-tête de l'application -->
+            <div class="app-header">
+                <div class="progress-info">
+                    <div class="progress-item">
+                        <div class="progress-label">Niveau</div>
+                        <div class="progress-value" id="levelDisplay">-</div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label">Module</div>
+                        <div class="progress-value" id="moduleDisplay">1/4</div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-label">Points</div>
+                        <div class="progress-value" id="pointsDisplay">0 pts</div>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="backToHome()">← Accueil</button>
+            </div>
+
+            <!-- Contenu des modules -->
+            <div id="module-1" class="module-content active">
+                <!-- Tutoriel 1 -->
+                <div class="tutorial-card">
+                    <h2 class="tutorial-title">📖 Module 1 : C'est quoi Linux ?</h2>
+                    <p class="tutorial-description">
+                        Bienvenue dans l'aventure du numérique libre ! Découvrez Linux, 
+                        ce système d'exploitation gratuit et puissant que les écoles libres 
+                        utilisent pour dire non aux Big Tech.
+                    </p>
+
+                    <div class="tutorial-section">
+                        <h4>🎯 Qu'est-ce que Linux ?</h4>
+                        <p class="tutorial-text">
+                            Linux est un système d'exploitation <strong>libre et gratuit</strong> comme Windows ou macOS, 
+                            mais avec une grande différence : tout le monde peut le voir, l'améliorer et le partager. 
+                            C'est comme la différence entre une recette secrète (Windows) et une recette partagée par tous (Linux) !
+                        </p>
+                    </div>
+
+                    <div class="visual-demo">
+                        <div class="visual-demo-icon">🖥️</div>
+                        <p><strong>Linux tourne sur des vieux ordinateurs</strong> qui fonctionnent encore parfaitement, 
+                            au lieu de les jeter pour acheter du matériel coûteux !</p>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>💡 Pourquoi c'est important pour les écoles ?</h4>
+                        <p class="tutorial-text">
+                            • <strong>Économie :</strong> Pas de licence coûteuse à payer<br>
+                            • <strong>Durabilité :</strong> Réutiliser le matériel au lieu de le jeter<br>
+                            • <strong>Liberté :</strong> Pas de dépendance aux entreprises Big Tech<br>
+                            • <strong>Apprentissage :</strong> Découvrez comment fonctionne vraiment l'informatique
+                        </p>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>🚀 Distribution Linux populaire : Ubuntu</h4>
+                        <p class="tutorial-text">
+                            Ubuntu est la version de Linux la plus facile pour débuter. 
+                            Elle est gratuite, belle et très utilisée dans les écoles !
+                        </p>
+                        <div class="code-example">$ sudo apt install ubuntu-desktop<br>$ # Ubuntu est prêt à l'emploi!</div>
+                    </div>
+                </div>
+
+                <!-- Quiz 1 -->
+                <div class="quiz-section">
+                    <h3 style="margin-bottom: 1.5rem;">✅ Test de compréhension</h3>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz1Progress" style="width: 0%"></div>
+                    </div>
+                    <div class="feedback-message" id="quiz1Feedback"></div>
+                    <div id="quiz1" class="quiz-container"></div>
+                    <button class="btn btn-primary" onclick="submitQuiz(1)" style="margin-top: 1rem;">
+                        Vérifier mes réponses
+                    </button>
+                </div>
+
+                <button class="btn btn-success" onclick="nextModule()" style="margin-top: 2rem; width: 100%;">
+                    → Passer au Module 2
+                </button>
+            </div>
+
+            <!-- Module 2 -->
+            <div id="module-2" class="module-content">
+                <div class="tutorial-card">
+                    <h2 class="tutorial-title">⚙️ Module 2 : Le Terminal Linux</h2>
+                    <p class="tutorial-description">
+                        Le terminal est le cœur battant de Linux. C'est un endroit magique 
+                        où vous pouvez donner des ordres à votre ordinateur en tapant du texte !
+                    </p>
+
+                    <div class="tutorial-section">
+                        <h4>🎮 Qu'est-ce qu'un terminal ?</h4>
+                        <p class="tutorial-text">
+                            Le terminal (ou console) est une interface texte pour communiquer avec l'ordinateur. 
+                            Au lieu de cliquer sur des boutons, on tape des commandes. 
+                            C'est plus puissant et plus efficace !
+                        </p>
+                    </div>
+
+                    <div class="visual-demo">
+                        <div class="visual-demo-icon">💬</div>
+                        <p><strong>Terminal = Communication directe</strong> avec l'ordinateur via du texte</p>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>📝 Commandes basiques</h4>
+                        <p class="tutorial-text"><strong>pwd</strong> : Affiche le dossier actuel</p>
+                        <div class="code-example">$ pwd<br>/home/utilisateur</div>
+                        
+                        <p class="tutorial-text" style="margin-top: 1rem;"><strong>ls</strong> : Liste les fichiers</p>
+                        <div class="code-example">$ ls<br>Documents  Images  Téléchargements</div>
+
+                        <p class="tutorial-text" style="margin-top: 1rem;"><strong>cd</strong> : Change de dossier</p>
+                        <div class="code-example">$ cd Documents<br>$ pwd<br>/home/utilisateur/Documents</div>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>🛡️ Conseil de sécurité</h4>
+                        <p class="tutorial-text">
+                            Ne tapez jamais une commande que vous ne comprenez pas ! 
+                            Demandez toujours à un adulte ou un enseignant d'abord.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h3 style="margin-bottom: 1.5rem;">✅ Test de compréhension</h3>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz2Progress" style="width: 0%"></div>
+                    </div>
+                    <div class="feedback-message" id="quiz2Feedback"></div>
+                    <div id="quiz2" class="quiz-container"></div>
+                    <button class="btn btn-primary" onclick="submitQuiz(2)" style="margin-top: 1rem;">
+                        Vérifier mes réponses
+                    </button>
+                </div>
+
+                <button class="btn btn-success" onclick="nextModule()" style="margin-top: 2rem; width: 100%;">
+                    → Passer au Module 3
+                </button>
+            </div>
+
+            <!-- Module 3 -->
+            <div id="module-3" class="module-content">
+                <div class="tutorial-card">
+                    <h2 class="tutorial-title">📁 Module 3 : Fichiers et Dossiers</h2>
+                    <p class="tutorial-description">
+                        Linux organise les fichiers dans une structure arborescente. 
+                        Apprenez à naviguer et gérer vos fichiers comme un pro !
+                    </p>
+
+                    <div class="tutorial-section">
+                        <h4>🌳 L'arborescence Linux</h4>
+                        <p class="tutorial-text">
+                            Linux organise tout dans une structure en arbre avec à la racine "/" (root). 
+                            Chaque dossier peut contenir d'autres dossiers et des fichiers.
+                        </p>
+                    </div>
+
+                    <div class="visual-demo">
+                        <div class="visual-demo-icon">📂</div>
+                        <div style="text-align: left; display: inline-block; font-family: monospace;">
+                            / (racine)<br>
+                            ├── home (dossier utilisateurs)<br>
+                            ├── var (données système)<br>
+                            ├── etc (configuration)<br>
+                            └── usr (programmes)
+                        </div>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>📝 Commandes de gestion</h4>
+                        <p class="tutorial-text"><strong>mkdir</strong> : Créer un dossier</p>
+                        <div class="code-example">$ mkdir MesDocuments</div>
+                        
+                        <p class="tutorial-text" style="margin-top: 1rem;"><strong>cp</strong> : Copier un fichier</p>
+                        <div class="code-example">$ cp document.txt document_copie.txt</div>
+
+                        <p class="tutorial-text" style="margin-top: 1rem;"><strong>mv</strong> : Déplacer/Renommer</p>
+                        <div class="code-example">$ mv ancien_nom.txt nouveau_nom.txt</div>
+
+                        <p class="tutorial-text" style="margin-top: 1rem;"><strong>rm</strong> : Supprimer</p>
+                        <div class="code-example">$ rm document.txt  # Attention : c'est irréversible !</div>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>⚠️ Important : La hiérarchie des dossiers</h4>
+                        <p class="tutorial-text">
+                            • <strong>..</strong> : Remonte au dossier parent<br>
+                            • <strong>.</strong> : Dossier actuel<br>
+                            • <strong>~</strong> : Dossier personnel de l'utilisateur
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h3 style="margin-bottom: 1.5rem;">✅ Test de compréhension</h3>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz3Progress" style="width: 0%"></div>
+                    </div>
+                    <div class="feedback-message" id="quiz3Feedback"></div>
+                    <div id="quiz3" class="quiz-container"></div>
+                    <button class="btn btn-primary" onclick="submitQuiz(3)" style="margin-top: 1rem;">
+                        Vérifier mes réponses
+                    </button>
+                </div>
+
+                <button class="btn btn-success" onclick="nextModule()" style="margin-top: 2rem; width: 100%;">
+                    → Passer au Module 4
+                </button>
+            </div>
+
+            <!-- Module 4 -->
+            <div id="module-4" class="module-content">
+                <div class="tutorial-card">
+                    <h2 class="tutorial-title">🎓 Module 4 : NIRD et l'Autonomie Numérique</h2>
+                    <p class="tutorial-description">
+                        Découvrez comment les écoles utilisent Linux et les logiciels libres 
+                        pour construire un numérique libre, responsable et durable. 
+                        C'est la vraie révolution ! 🚀
+                    </p>
+
+                    <div class="tutorial-section">
+                        <h4>🏛️ Qu'est-ce que NIRD ?</h4>
+                        <p class="tutorial-text">
+                            NIRD signifie <strong>Numérique Inclusif, Responsable et Durable</strong>. 
+                            C'est un mouvement d'écoles qui se libèrent des Big Tech (Microsoft, Apple, Google...) 
+                            en utilisant Linux et les logiciels libres.
+                        </p>
+                    </div>
+
+                    <div class="visual-demo">
+                        <div class="visual-demo-icon">⚔️</div>
+                        <p><strong>David contre Goliath</strong><br>Les petites écoles (David) qui résistent aux Big Tech (Goliath)</p>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>🌱 Les trois piliers de NIRD</h4>
+                        <p class="tutorial-text">
+                            <strong>1. Inclusion</strong><br>
+                            Tout le monde peut utiliser et modifier Linux, 
+                            peu importe le matériel ou le budget de l'école.<br><br>
+
+                            <strong>2. Responsabilité</strong><br>
+                            Les données des élèves et des écoles restent protégées et en Europe, 
+                            pas envoyées à des serveurs américains.<br><br>
+
+                            <strong>3. Durabilité</strong><br>
+                            Réutiliser le matériel au lieu de le jeter, réduire la pollution numérique.
+                        </p>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>💪 Avantages concrets pour votre école</h4>
+                        <p class="tutorial-text">
+                            • <strong>Économies :</strong> 0€ de licences logicielles<br>
+                            • <strong>Liberté :</strong> Adapter les outils à vos besoins<br>
+                            • <strong>Sécurité :</strong> Contrôle total de vos données<br>
+                            • <strong>Formation :</strong> Apprendre les VRAIS bases de l'informatique<br>
+                            • <strong>Écologie :</strong> Réduire e-déchets
+                        </p>
+                    </div>
+
+                    <div class="visual-demo">
+                        <div class="visual-demo-icon">🌍</div>
+                        <p><strong>Exemple réel :</strong> Le lycée Carnot en France 
+                            a économisé des milliers d'euros en passant à Linux !</p>
+                    </div>
+
+                    <div class="tutorial-section">
+                        <h4>🔧 Logiciels libres incontournables</h4>
+                        <p class="tutorial-text">
+                            • <strong>LibreOffice</strong> : Remplace Microsoft Office (gratuit)<br>
+                            • <strong>GIMP</strong> : Remplace Photoshop (gratuit)<br>
+                            • <strong>Firefox</strong> : Navigateur web respectueux de la vie privée<br>
+                            • <strong>Blender</strong> : 3D professionnelle (gratuit !)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h3 style="margin-bottom: 1.5rem;">✅ Test final</h3>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz4Progress" style="width: 0%"></div>
+                    </div>
+                    <div class="feedback-message" id="quiz4Feedback"></div>
+                    <div id="quiz4" class="quiz-container"></div>
+                    <button class="btn btn-primary" onclick="submitQuiz(4)" style="margin-top: 1rem;">
+                        Vérifier mes réponses
+                    </button>
+                </div>
+
+                <button class="btn btn-success" onclick="completeLevel()" style="margin-top: 2rem; width: 100%;">
+                    ✨ Terminer le niveau
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de résultats -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">🎉</div>
+            <h2 class="modal-title" id="modalTitle">Excellent !</h2>
+            <p class="modal-text" id="modalText">Vous avez validé ce niveau !</p>
+            <div id="modalStats" style="text-align: left; margin-bottom: 1.5rem;"></div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="backToHome()">Accueil</button>
+                <button class="btn btn-secondary" onclick="selectLevel(currentLevel)" style="display: none;" id="retryBtn">
+                    Recommencer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
+
