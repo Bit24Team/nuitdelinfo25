@@ -3,6 +3,16 @@
     user-select: none;
 }
 
+/* Animation de lueur pour la tête du serpent */
+@keyframes headGlow {
+    0%, 100% {
+        box-shadow: 0 0 24px rgba(216, 228, 50, 0.95), inset 3px 3px 6px rgba(255, 255, 255, 0.3), inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(216, 228, 50, 1), 0 0 60px rgba(216, 228, 50, 0.5), inset 3px 3px 8px rgba(255, 255, 255, 0.4), inset -3px -3px 8px rgba(0, 0, 0, 0.4);
+    }
+}
+
 /* Food animations */
 @keyframes foodPulse {
     0%, 100% {
@@ -31,15 +41,15 @@
 
 @keyframes eatFood {
     0% {
-        transform: scale(1);
+        transform: scale(1) rotate(0deg);
         opacity: 1;
     }
     50% {
-        transform: scale(1.5);
+        transform: scale(1.5) rotate(90deg);
         opacity: 0.5;
     }
     100% {
-        transform: scale(0);
+        transform: scale(0) rotate(180deg);
         opacity: 0;
     }
 }
@@ -47,38 +57,76 @@
 /* Renforcements pour effet "manger" */
 .snake-eat {
     animation: headEatBig 520ms cubic-bezier(.2,.8,.2,1);
-    box-shadow: 0 0 44px rgba(99,102,241,1), 0 0 90px rgba(99,102,241,0.75);
+    box-shadow: 0 0 44px rgba(99,102,241,1), 0 0 90px rgba(99,102,241,0.75) !important;
     transform-origin: center;
     z-index: 11000 !important;
 }
 
 @keyframes headEatBig {
-    0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(99,102,241,0)); }
-    30% { transform: scale(1.5) rotate(-8deg) translateY(-4px); filter: drop-shadow(0 14px 40px rgba(99,102,241,0.95)); }
-    60% { transform: scale(1.35) rotate(6deg) translateY(2px); filter: drop-shadow(0 10px 30px rgba(99,102,241,0.85)); }
-    100% { transform: scale(1) rotate(0deg) translateY(0); filter: drop-shadow(0 0 0 rgba(99,102,241,0)); }
+    0% { 
+        transform: scale(1) rotate(0deg); 
+        filter: drop-shadow(0 0 0 rgba(99,102,241,0)); 
+    }
+    30% { 
+        transform: scale(1.5) rotate(-8deg) translateY(-4px); 
+        filter: drop-shadow(0 14px 40px rgba(99,102,241,0.95)); 
+    }
+    60% { 
+        transform: scale(1.35) rotate(6deg) translateY(2px); 
+        filter: drop-shadow(0 10px 30px rgba(99,102,241,0.85)); 
+    }
+    100% { 
+        transform: scale(1) rotate(0deg) translateY(0); 
+        filter: drop-shadow(0 0 0 rgba(99,102,241,0)); 
+    }
 }
 
-/* Screen shake rapide */
+/* Screen shake plus prononcé */
 .snake-screen-shake {
-    animation: screenShake 240ms ease-in-out;
+    animation: screenShake 300ms ease-in-out;
 }
 
 @keyframes screenShake {
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-6px) rotate(-0.6deg); }
-    50% { transform: translateY(4px) rotate(0.4deg); }
-    75% { transform: translateY(-2px) rotate(-0.3deg); }
-    100% { transform: translateY(0); }
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-8px, 4px) rotate(-1deg); }
+    50% { transform: translate(6px, -6px) rotate(0.8deg); }
+    75% { transform: translate(-4px, 2px) rotate(-0.5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-/* Particles plus visibles */
+/* Particles plus visibles avec animation */
 .eat-particle {
     will-change: transform, opacity, filter;
     box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    animation: particleFly 0.6s ease-out forwards;
+}
+
+@keyframes particleFly {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0.3);
+    }
 }
 
 /* Optionnel: rendre la disparition de la nourriture un peu plus marquée */
 .is-eaten {
     animation: eatFood 0.45s cubic-bezier(.2,.9,.2,1) forwards !important;
+}
+
+/* Animation pulse subtile pour les segments du corps */
+.snake-segment {
+    animation: segmentPulse 2s ease-in-out infinite;
+}
+
+@keyframes segmentPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.95;
+    }
 }

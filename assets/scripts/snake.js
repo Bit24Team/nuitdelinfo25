@@ -12,6 +12,8 @@ class SnakeGame {
         this.gameSpeed = 130;
         this.gameLoop = null;
         this.snakeSize = 40;
+        this.smoothMovement = true;
+        this.animationFrame = null;
         this.typedWord = '';
         this.typingTimeout = null;
         this.snakeElements = [];
@@ -101,18 +103,30 @@ class SnakeGame {
     }
     
     hideOriginalImages() {
-        // Hide challenge card images but keep their space
+        // Hide challenge card images with fade-out animation
         const images = document.querySelectorAll('.card-icon img');
         images.forEach(img => {
             img.dataset.originalDisplay = img.style.display || '';
-            img.style.visibility = 'hidden';
+            img.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                img.style.visibility = 'hidden';
+            }, 500);
         });
     }
     
     showOriginalImages() {
         const images = document.querySelectorAll('.card-icon img');
-        images.forEach(img => {
+        images.forEach((img, index) => {
             img.style.visibility = 'visible';
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                img.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                img.style.opacity = '1';
+                img.style.transform = 'scale(1)';
+            }, index * 100);
         });
     }
     
@@ -221,7 +235,18 @@ class SnakeGame {
         
         imgWrapper.appendChild(img);
         foodEl.appendChild(imgWrapper);
+        
+        // Animation d'apparition
+        foodEl.style.opacity = '0';
+        foodEl.style.transform = 'scale(0)';
         document.body.appendChild(foodEl);
+        
+        requestAnimationFrame(() => {
+            foodEl.style.transition = 'opacity 0.3s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            foodEl.style.opacity = '1';
+            foodEl.style.transform = 'scale(1)';
+        });
+        
         this.foodElements[0] = foodEl;
     }
     
@@ -245,10 +270,14 @@ class SnakeGame {
         // --- NOUVEAUX STYLES ET ANIMATIONS POUR LA TÊTE ---
         let headStyles = '';
         if (isHead) {
-            // Ajout d'une transition et d'une petite transformation/pulsation
             headStyles = `
-                transition: all ${this.gameSpeed / 1000}s linear; /* Transition douce pour le mouvement */
-                animation: headPulse ${this.gameSpeed / 200}s ease-in-out; /* Effet de pulsation très rapide lors du mouvement */
+                transition: left ${this.gameSpeed / 1000}s linear, top ${this.gameSpeed / 1000}s linear, transform 0.1s ease;
+                animation: headGlow 1.5s ease-in-out infinite;
+            `;
+        } else {
+            // Segments du corps avec transition smooth
+            headStyles = `
+                transition: left ${this.gameSpeed / 1000}s linear, top ${this.gameSpeed / 1000}s linear;
             `;
         }
 
@@ -454,12 +483,14 @@ class SnakeGame {
                 
                 requestAnimationFrame(() => {
                     foodEl.classList.add('is-eaten');
+                    foodEl.style.transition = 'opacity 0.3s ease, transform 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045)';
+                    foodEl.style.transform = 'scale(0) rotate(180deg)';
                 });
                 
-                // 2. Spawn nouveau food APRES l'animation (0.15s)
+                // 2. Spawn nouveau food APRES l'animation (0.3s)
                 setTimeout(() => {
                      this.spawnFood(true); 
-                }, 150); 
+                }, 300); 
             }
         }
     }
