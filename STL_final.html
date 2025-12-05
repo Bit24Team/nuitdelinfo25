@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTOPIE3D - Studio Ultimate</title>
+    <link rel="icon" type="image/x-icon" href="https://www.nuitdelinfo.com/img/logo_n2i_blanc.svg"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/STL_final.css">
+    
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+    </script>
+</head>
+<body>
+
+    <div id="landing-page">
+        <div class="landing-content">
+            <div class="landing-title">UTOPIE3D</div>
+            <p class="landing-subtitle">Solution professionnelle pour la Nuit de l'Info.</p>
+            <div class="steps-grid">
+                <div class="step-item"><h3>1. Chargez</h3><p>Support STL natif</p></div>
+                <div class="step-item"><h3>2. Transformez</h3><p>Outils intuitifs</p></div>
+                <div class="step-item"><h3>3. Estimez</h3><p>Temps & Coûts</p></div>
+            </div>
+            <button class="btn-start" id="start-app-btn">Entrer dans le Studio</button>
+        </div>
+    </div>
+
+    <div id="app-container">
+        <div id="sidebar">
+            <div class="header-row">
+                <div>
+                    <h1 class="brand-title">UTOPIE3D <span class="brand-subtitle">Studio</span></h1>
+                </div>
+                <button class="theme-toggle" id="theme-btn" title="Changer le thème">🌙</button>
+            </div>
+            
+            <div class="section">
+                 <label for="fileInput" class="btn btn-primary">📂 Charger un fichier STL</label>
+                 <input type="file" id="fileInput" accept=".stl" />
+            </div>
+
+            <div class="section" id="controls-section" style="display:none;">
+                <h2>Outils de transformation</h2>
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-action" id="btn-translate">Pos.</button>
+                    <button class="btn btn-secondary btn-action" id="btn-rotate">Rot.</button>
+                    <button class="btn btn-secondary btn-action" id="btn-scale">Dim.</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary btn-action" id="btn-center">Centrer</button>
+                    <button class="btn btn-secondary btn-action" id="btn-duplicate">Dupliquer</button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-accent" id="btn-ruler">📏 Règle de mesure</button>
+                    <div id="ruler-result" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="section" id="analysis-section" style="display:none;">
+                <h2>Devis & Fabrication</h2>
+                
+                <label for="material-select">Matériau :</label>
+                <select id="material-select">
+                    <option value="PLA" data-density="1.24" data-price="25">PLA Standard (25€/kg)</option>
+                    <option value="ABS" data-density="1.04" data-price="30">ABS Technique (30€/kg)</option>
+                    <option value="PETG" data-density="1.27" data-price="35">PETG (35€/kg)</option>
+                    <option value="PC" data-density="1.20" data-price="60">Polycarbonate (60€/kg)</option>
+                </select>
+
+                <label for="print-speed" style="margin-top: 15px;">Vitesse (cm³/h) :</label>
+                <input type="number" id="print-speed" value="25" min="1">
+                
+                <hr>
+                <div class="data-row"><span>Objets :</span> <span class="data-val" id="obj-count">0</span></div>
+                <div class="data-row"><span>Dimensions :</span> <span class="data-val" id="dims">-</span></div>
+                <div class="data-row"><span>Volume :</span> <span class="data-val" id="volume">-</span> <small>cm³</small></div>
+                <div class="data-row"><span>Masse :</span> <span class="data-val" id="mass">-</span> <small>g</small></div>
+                
+                <hr>
+                <div class="data-row">
+                    <span style="font-weight:600;">Coût Estimé :</span> 
+                    <span class="data-val big-price" id="cost">- €</span>
+                </div>
+                <div class="data-row" style="margin-top: 15px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <span style="display:flex; align-items:center;">⏱️ Temps :</span> 
+                    <span class="data-val" style="font-size: 1rem;" id="print-time">-</span>
+                </div>
+            </div>
+        </div>
+        <div id="viewer-container"></div>
+    </div>
+
+    <script type="module" src="assets/scripts/STL_final.js"></script>
+</body>
+</html>
