@@ -1,69 +1,178 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laser Game Evolution - Défi Nuit de l'Info</title>
-    <link rel="stylesheet" href="../../assets/styles/style.css">
-    <link rel="stylesheet" href="./assets/styles/laser.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Défi 4 : Laser Game - NIRD</title>
+    <link rel="stylesheet" href="../../assets/styles/style.css" />
+    <link rel="stylesheet" href="./assets/styles/laser.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <h1>NIRD Linux Academy</h1>
+        </div>
+        <div class="nav-actions">
+          <a
+            href="../../index.html"
+            class="back-btn"
+            style="text-decoration: none"
+            >← Retour au Hub</a
+          >
+        </div>
+      </div>
+    </nav>
 
-    <div id="game-ui" class="hidden">
-        <div class="hud-top">
-            <div class="score-board">SCORE: <span id="score">0</span></div>
-            <div class="health-board">VIE: <span id="health">100</span>%</div>
-            <button id="stop-game-btn">Arrêter la mission</button>
-        </div>
-        <div id="crosshair"></div> <div id="impact-container"></div> <div id="game-over-modal" class="hidden">
-            <h2>MISSION TERMINÉE</h2>
-            <p>Score final : <span id="final-score">0</span></p>
-            <input type="text" id="player-name" placeholder="Votre Pseudo" maxlength="10">
-            <button id="save-score">Enregistrer le score</button>
-            
-            <h3>Tableau des scores</h3>
-            <ul id="leaderboard-list"></ul>
-            <button onclick="location.reload()">Rejouer</button>
-        </div>
+    <div
+      class="welcome-screen"
+      style="min-height: 100vh; padding-top: 80px; align-items: flex-start"
+    >
+      <div class="container" style="max-width: 900px; text-align: center">
+        <header class="game-header">
+          <h1 class="section-title" style="margin-bottom: 1rem">
+            SIMULATION : ZERGUÈM
+          </h1>
+          <p class="welcome-subtitle">
+            Module d'entraînement tactique propulsé par
+            <strong>Laser Game Evolution</strong>
+          </p>
+
+          <button
+            id="start-game-btn"
+            class="btn btn-primary"
+            style="
+              font-size: 1.2rem;
+              padding: 1rem 2.5rem;
+              margin: 2rem 0;
+              box-shadow: 0 0 20px var(--primary-color);
+            "
+          >
+            🔫 LANCER LA SIMULATION
+          </button>
+        </header>
+
+        <main class="game-content">
+          <div class="tutorial-card targetable" style="text-align: left">
+            <h2 class="tutorial-title">📂 Briefing de Mission</h2>
+            <p class="tutorial-description">
+              <strong>Agent, écoutez bien.</strong> Des processus parasites
+              envahissent le serveur de l'académie. En partenariat avec les
+              experts du combat rapproché de <em>Laser Game Evolution</em>, nous
+              avons virtualisé la menace. Votre objectif : déboguer la zone
+              avant le crash système.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="dashboard-card targetable">
+              <div class="dashboard-icon">⚡</div>
+              <h3 class="dashboard-title">Latence</h3>
+              <p class="dashboard-value">1ms</p>
+              <p style="font-size: 0.9rem; opacity: 0.7">
+                Ping serveur optimal
+              </p>
+            </div>
+            <div class="dashboard-card targetable">
+              <div class="dashboard-icon">👾</div>
+              <h3 class="dashboard-title">Menaces</h3>
+              <p class="dashboard-value">CRITIQUE</p>
+              <p style="font-size: 0.9rem; opacity: 0.7">Bugs détectés</p>
+            </div>
+            <div class="dashboard-card targetable">
+              <div class="dashboard-icon">🎯</div>
+              <h3 class="dashboard-title">Précision</h3>
+              <p class="dashboard-value">Requise</p>
+              <p style="font-size: 0.9rem; opacity: 0.7">Calibrage laser</p>
+            </div>
+          </div>
+
+          <div
+            class="tutorial-card targetable"
+            style="text-align: left; margin-top: 2rem"
+          >
+            <h2 class="tutorial-title">⚔️ Protocoles d'Engagement</h2>
+            <div class="tutorial-section">
+              <ul
+                style="
+                  list-style-position: inside;
+                  color: var(--text-secondary);
+                "
+              >
+                <li style="margin-bottom: 10px">
+                  🚫 <strong>Pas de pitié :</strong> Tirez sur tout ce qui bouge
+                  (et ce qui ne bouge pas).
+                </li>
+                <li style="margin-bottom: 10px">
+                  🛡️ <strong>Restez couvert :</strong> Les drones ennemis
+                  ripostent avec des malwares rouges.
+                </li>
+                <li>
+                  💻 <strong>Objectif :</strong> Obtenir le High Score pour
+                  sauver le Kernel.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
-    <header class="site-header">
-        <h1>Laser Game Evolution</h1>
-        <p>Bienvenue sur notre documentation technique.</p>
-        <button id="start-game-btn" class="cta-button">ACTIVER LE PROTOCOLE ZERGUÈM</button>
-    </header>
+    <div id="game-ui" class="hidden">
+      <div class="hud-panel">
+        <div class="hud-row">
+          <span class="hud-label">SCORE</span>
+          <span class="hud-value" id="score">0</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-label">INTEGRITÉ</span>
+          <span class="hud-value" id="health" style="color: var(--accent-color)"
+            >100%</span
+          >
+        </div>
+        <button id="stop-game-btn">Abandonner</button>
+      </div>
 
-    <main class="content-wrapper">
-        <section class="targetable">
-            <h2>Notre Histoire</h2>
-            <p>Depuis l’ouverture de notre premier centre, sous la marque Laser Game Evolution, près de 110 établissements ont été créés.</p>
-        </section>
+      <div id="crosshair"></div>
 
-        <section class="grid-container">
-            <div class="card targetable">
-                <h3>Chiffre d'affaires</h3>
-                <p>31 millions générés en 2019.</p>
-            </div>
-            <div class="card targetable">
-                <h3>Leader</h3>
-                <p>Leader du marché français du jeu laser.</p>
-            </div>
-            <div class="card targetable">
-                <h3>Concept</h3>
-                <p>Nous maîtrisons le concept de A à Z.</p>
-            </div>
-        </section>
+      <div id="game-over-modal" class="hidden">
+        <h2>MISSION TERMINÉE</h2>
+        <p style="margin-bottom: 20px; color: var(--text-secondary)">
+          Performance de l'Agent
+        </p>
+        <div class="final-score-display">
+          <span id="final-score">0</span> pts
+        </div>
 
-        <section class="targetable">
-            <h2>Règles de sécurité</h2>
-            <ul>
-                <li>Ne pas courir</li>
-                <li>Ne pas grimper</li>
-                <li>Fair play avant tout</li>
-            </ul>
-        </section>
-    </main>
+        <div style="margin-top: 30px">
+          <input
+            type="text"
+            id="player-name"
+            placeholder="Ton Pseudo"
+            maxlength="15"
+          />
+          <button id="save-score" class="btn btn-primary">Enregistrer</button>
+        </div>
+
+        <div class="leaderboard-container">
+          <h3>🏆 Tableau d'Honneur</h3>
+          <ul id="leaderboard-list"></ul>
+        </div>
+
+        <button
+          onclick="location.reload()"
+          class="btn btn-secondary"
+          style="margin-top: 20px"
+        >
+          Relancer la simulation
+        </button>
+      </div>
+    </div>
 
     <script src="./assets/scripts/game.js"></script>
-</body>
+  </body>
 </html>
