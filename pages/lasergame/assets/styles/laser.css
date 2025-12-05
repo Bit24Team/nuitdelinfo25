@@ -1,0 +1,129 @@
+/* nuitdelinfo25/pages/lasergame/assets/styles/laser.css */
+
+/* --- Mode Jeu Activé --- */
+body.game-mode {
+    background-color: #050510; /* Très sombre */
+    color: #00ffcc; /* Cyan Néon */
+    cursor: none; /* On cache la souris pour mettre notre viseur */
+    overflow: hidden;
+}
+
+body.game-mode h1, body.game-mode h2, body.game-mode h3 {
+    color: #ff0055; /* Rose Néon */
+    text-shadow: 0 0 10px #ff0055;
+}
+
+body.game-mode p, body.game-mode li {
+    text-shadow: 0 0 5px #00ffcc;
+}
+
+/* Le viseur (Crosshair) */
+#crosshair {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #00ffcc;
+    border-radius: 50%;
+    pointer-events: none; /* Laisse passer les clics */
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    box-shadow: 0 0 10px #00ffcc;
+}
+#crosshair::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: red;
+    transform: translate(-50%, -50%);
+}
+
+/* Éléments ciblables */
+.targetable {
+    transition: opacity 0.2s;
+    border: 1px dashed transparent;
+}
+.targetable:hover {
+    border-color: rgba(255, 0, 0, 0.5); /* Indique qu'on peut tirer */
+}
+
+/* HUD */
+.hud-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+    color: white;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.5rem;
+    z-index: 1000;
+}
+
+.health-board { color: #ff3333; }
+.score-board { color: #33ff33; }
+
+/* Ennemis (Drones) */
+.enemy {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, #ff0000 20%, #330000 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 15px red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: none;
+    z-index: 500;
+    animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Laser Beam (Visuel du tir) */
+.laser-beam {
+    position: fixed;
+    background: rgba(0, 255, 204, 0.8);
+    height: 4px;
+    transform-origin: 0 50%;
+    pointer-events: none;
+    z-index: 900;
+    box-shadow: 0 0 10px #00ffcc;
+    transition: opacity 0.1s;
+}
+
+/* Effet écran quand on est touché */
+.damage-flash {
+    animation: flashRed 0.2s;
+}
+@keyframes flashRed {
+    0% { background-color: rgba(255,0,0,0.5); }
+    100% { background-color: transparent; }
+}
+
+/* Modal de fin */
+#game-over-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #00ffcc;
+    padding: 40px;
+    text-align: center;
+    color: white;
+    z-index: 2000;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 255, 204, 0.2);
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Laser Game Backend Service
+After=network.target
+
+[Service]
+User=your_username
+Group=www-data
+WorkingDirectory=/path/to/lasergame-leaderboard-project/backend/src
+Environment="FLASK_APP=main.py"
+Environment="FLASK_ENV=production"
+ExecStart=/usr/bin/python3 -m flask run --host=0.0.0.0 --port=5000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

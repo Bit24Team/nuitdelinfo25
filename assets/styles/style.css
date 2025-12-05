@@ -642,3 +642,20 @@ input:checked + .slider:before {
         font-size: 2rem;
     }
 }
+=======
+/*# sourceMappingURL=style.css.map */
+
+/* nuitdelinfo25/assets/styles/style.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.5s ease;
+}
+
+h1, h2 { color: #0044cc; }
+
+/* Utilitaires */
+.hidden { display: none !important; }
